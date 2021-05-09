@@ -1,10 +1,13 @@
 import http from 'http'
-import express from 'express'
+import dotenv from 'dotenv'
 
-const app = express()
+import App from './src/App.js'
+import connect from './conf/db.js'
 
-const server = http.createServer(app)
+dotenv.config()
+const server = http.createServer(App)
 
 server.listen(3000, () => {
   console.log('Server started.')
+  connect(process.env.MONGO_URL)
 })

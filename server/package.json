@@ -10,7 +10,10 @@
   "author": "Jason Connor",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1"
+    "aws-sdk": "^2.897.0",
+    "dotenv": "^9.0.1",
+    "express": "^4.17.1",
+    "mongoose": "^5.12.7"
   },
   "devDependencies": {
     "nodemon": "^2.0.7"
