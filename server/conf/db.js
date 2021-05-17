@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-const connect = async (url) => {
+export default async function connect(url) {
   const options = {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -13,5 +13,3 @@ const connect = async (url) => {
     process.exit(1)
   }
 }
-
-export default connect
