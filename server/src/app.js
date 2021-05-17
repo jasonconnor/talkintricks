@@ -1,9 +1,5 @@
 import express from 'express'
 
-import EpisodeRouter from './routes/EpisodeRouter.js'
+const App = express()
 
-const app = express()
-
-app.use('/api', EpisodeRouter)
-
-export default app
+export default App
