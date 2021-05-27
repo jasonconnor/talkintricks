@@ -9,5 +9,5 @@ const server = http.createServer(App)
 
 server.listen(3000, () => {
   console.log('Server started.')
-  connect(process.env.MONGO_URL)
+  connect(process.env.MONGO_DEV)
 })
