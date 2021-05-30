@@ -7,7 +7,7 @@ import connect from './conf/db.js'
 dotenv.config()
 const server = http.createServer(App)
 
-server.listen(3000, () => {
+server.listen(4000, () => {
   console.log('Server started.')
-  connect(process.env.MONGO_DEV)
+  connect(process.env.MONGO_PROD)
 })

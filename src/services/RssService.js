@@ -10,7 +10,7 @@ export default class RssService {
         description: 'Welcome to Talkin\' Tricks! The Tricking Podcast where Jason and Frank discuss the intricacies of Trick Theory, explore the philosophy of tricking, and just generally ask interestingly pointless questions!',
         site_url: 'https://talkintricks.com',
         feed_url: 'https://api.talkintricks.com/rss',
-        // image_irl: TODO: /path/to/logo.png,
+         image_irl: 'https://talkintricks.com/assets/images/logo.png',
         pubDate: new Date(),
         webMaster: 'talkintricks22@gmail.com (Jason Connor)',
         managingEditor: 'talkintricks22@gmail.com (Frank Vazquez)',
@@ -27,7 +27,7 @@ export default class RssService {
           feed.item({
             title: episode.title,
             link: 'https://talkintricks.com/stream',
-            description: 'episode desc',
+            description: episode.description,
             date: episode.date,
             author: 'talkintricks22@gmail.com',
             enclosure: {
@@ -39,7 +39,6 @@ export default class RssService {
 
         resolve(feed.xml())
       } catch (error) {
-        console.log(error)
         reject(error.message)
       }
     })
