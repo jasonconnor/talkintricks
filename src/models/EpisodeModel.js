@@ -14,6 +14,10 @@ const EpisodeModel = mongoose.Schema({
     type: String,
     default: 'Talkin Tricks'
   },
+  duration: {
+    type: String,
+    default: '00:00'
+  },
   date: {
     type: Date,
     default: Date.now
