@@ -10,7 +10,7 @@ export default class RssService {
         description: 'Welcome to Talkin\' Tricks! The Tricking Podcast where Jason and Frank discuss the intricacies of Trick Theory, explore the philosophy of tricking, and just generally ask interestingly pointless questions!',
         site_url: 'https://talkintricks.com',
         feed_url: 'https://api.talkintricks.com/rss',
-        image_irl: 'https://talkintricks.com/assets/images/logo.png',
+        image_irl: 'https://talkintricks.com/assets/images/sq_logo.png',
         pubDate: new Date(),
         webMaster: 'talkintricks22@gmail.com (Jason Connor)',
         managingEditor: 'talkintricks22@gmail.com (Frank Vazquez)',
@@ -27,7 +27,7 @@ export default class RssService {
         },
         custom_elements: [
           {'itunes:author': 'Talkin\' Tricks'},
-          {'itunes:image': 'https://talkintricks.com/assets/images/logo.png'},
+          {'itunes:image': 'https://talkintricks.com/assets/images/sq_logo.png'},
           {'itunes:explicit': 'yes'},
           {'itunes:complete': 'no'},
           {'itunes:type': 'episodic'},
