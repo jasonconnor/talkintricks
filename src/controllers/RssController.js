@@ -2,11 +2,12 @@ import RssService from '../services/RssService.js'
 
 export default class RssController {
   static getFeed = async (request, response, next) => {
-    try {
-      const feed = await RssService.createFeed()
-      return response.status(200).send(feed)
-    } catch (error) {
+    const [feed, error] = await RssService.createFeed()
+
+    if (error) {
       return response.status(500).json({error: error.message})
     }
+
+    return response.status(200).send(feed)
   }
 }
