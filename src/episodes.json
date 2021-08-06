@@ -1,0 +1,17 @@
+[
+  {
+    "title": "Episode 1",
+    "url": "http://localhost:3000/episode_1.mp3",
+    "description": "episode 1 description"
+  },
+  {
+    "title": "Episode 2",
+    "url": "http://localhost:3000/episode_2.mp3",
+    "description": "episode 2 description"
+  },
+  {
+    "title": "Episode 3",
+    "url": "http://localhost:3000/episode_3.mp3",
+    "description": "episode 3 description"
+  }
+]

@@ -1,6 +1,9 @@
+import Player from './Player/Player'
+
 export default function App() {
   return (
-    <div className='App'>
-    </div>
+    <>
+      <Player />
+    </>
   )
 }
