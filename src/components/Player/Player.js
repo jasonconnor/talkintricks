@@ -5,12 +5,16 @@ import fetchEpisodes from '../../services/fetchEpisodes'
 export default function Player() {
   const [episodes, setEpisodes] = useState()
 
+  const [muted, setMuted] = useState(false)
   const [loading, setLoading] = useState(true)
   const [playing, setPlaying] = useState(false)
+  const [showVolumeControls, setShowVolumeControls] = useState(false)
 
+  const [currentVolume, setCurrentVolume] = useState(0.6)
   const [currentEpisode, setCurrentEpisode] = useState(0)
   const [currentProgress, setCurrentProgress] = useState(0)
 
+  const volumeRef = useRef(currentVolume)
   const intervalRef = useRef()
   const audioRef = useRef(new Audio())
 
@@ -29,6 +33,7 @@ export default function Player() {
   }
 
   // Controller Functions
+  // Episode Control Functions
   const togglePlay = () => {
     playing
       ? setPlaying(false)
@@ -71,6 +76,24 @@ export default function Player() {
     setCurrentEpisode(key)
   }
 
+  // Audio Control Functions
+  const toggleMute = () => {
+    muted
+      ? setMuted(false)
+      : setMuted(true)
+  }
+
+  const handleMute = () => {
+    console.log('muted')
+    volumeRef.current = currentVolume
+    setCurrentVolume(0)
+  }
+
+  const handleUnmute = () => {
+    setCurrentVolume(volumeRef.current)
+  }
+      
+
   // Fetch Episodes
   useEffect(() => {
     console.log('initial render')
@@ -93,6 +116,18 @@ export default function Player() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [playing])
 
+  // Handle Mute/Unmute
+  useEffect(() => {
+    muted
+      ? handleMute()
+      : handleUnmute()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [muted])
+
+  useEffect(() => {
+    audioRef.current.volume = currentVolume
+  }, [currentVolume])
+
   // Handle Episode Changes
   useEffect(() => {
     // unfortunately effective
@@ -101,8 +136,13 @@ export default function Player() {
 
       handlePause()
       audioRef.current = new Audio(url)
+      
       setCurrentProgress(0)
+      
       if (playing) handlePlay()
+      
+      // adjust volume for new ref
+      if (muted) audioRef.current.volume = 0
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentEpisode])
@@ -128,7 +168,25 @@ export default function Player() {
         <button onClick={() => handleNext()}>next</button>
         
         {/* Volume Controls */}
+        <div onMouseLeave={() => setShowVolumeControls(false)}>
+          <button 
+            onClick={() => toggleMute()}
+            onMouseOver={() => setShowVolumeControls(true)}
+          >{muted ? 'unmute' : 'mute'}</button>
 
+          { showVolumeControls
+            ? (
+                <input
+                  type='range'
+                  min='0'
+                  max='1'
+                  step='0.1'
+                  value={currentVolume}
+                />
+              )
+            : null
+          }
+        </div>
       </>
 
       {/* Episode List */}
