@@ -10,7 +10,7 @@ export default function Player() {
   const [playing, setPlaying] = useState(false)
   const [showVolumeControls, setShowVolumeControls] = useState(false)
 
-  const [currentVolume, setCurrentVolume] = useState(0.6)
+  const [currentVolume, setCurrentVolume] = useState(1)
   const [currentEpisode, setCurrentEpisode] = useState(0)
   const [currentProgress, setCurrentProgress] = useState(0)
 
@@ -63,7 +63,7 @@ export default function Player() {
   }
 
   const handleScrubbing = (event) => {
-    const { value } = event.target
+    const value = parseFloat(event.target.value)
 
     clearInterval(intervalRef.current)
     audioRef.current.currentTime = value
@@ -84,15 +84,23 @@ export default function Player() {
   }
 
   const handleMute = () => {
-    console.log('muted')
-    volumeRef.current = currentVolume
     setCurrentVolume(0)
   }
 
   const handleUnmute = () => {
-    setCurrentVolume(volumeRef.current)
+    volumeRef.current === 0
+      ? setCurrentVolume(1) 
+      : setCurrentVolume(volumeRef.current)
   }
-      
+  
+  const setVolume = (event) => {
+    const value = parseFloat(event.target.value)
+
+    if (value === 0) setMuted(true)
+    volumeRef.current = value
+    setCurrentVolume(value)
+    if (muted) setMuted(false)
+  }
 
   // Fetch Episodes
   useEffect(() => {
@@ -140,7 +148,7 @@ export default function Player() {
       setCurrentProgress(0)
       
       if (playing) handlePlay()
-      
+
       // adjust volume for new ref
       if (muted) audioRef.current.volume = 0
     }
@@ -153,7 +161,7 @@ export default function Player() {
       <>
         <input
           type='range'
-          step='1'
+          step='0.1'
           min='0'
           max={`${duration}`}
           value={currentProgress}
@@ -182,6 +190,7 @@ export default function Player() {
                   max='1'
                   step='0.1'
                   value={currentVolume}
+                  onChange={(event) => setVolume(event)}
                 />
               )
             : null
