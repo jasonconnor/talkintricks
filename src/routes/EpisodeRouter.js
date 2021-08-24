@@ -1,6 +1,6 @@
 import express from 'express'
 
-import EpisodeController from '../controllers/EpisodeController.js'
+import * as EpisodeController from '../controllers/EpisodeController.js'
 
 const EpisodeRouter = express.Router()
 

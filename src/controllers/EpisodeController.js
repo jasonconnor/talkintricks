@@ -1,13 +1,9 @@
-import EpisodeService from '../services/EpisodeService.js'
+import { getAllEpisodes } from '../services/EpisodeService.js'
 
-export default class EpisodeController {
-  static index = async (request, response, next) => {
-    const [episodes, error] = await EpisodeService.getAllEpisodes()
+export async function index(request, response) {
+  const [episodes, error] = await getAllEpisodes()
 
-    if (error) {
-      return response.status(500).json({error: error.message})
-    }
+  if (error) return response.status(500).json({error: error.message})
 
-    return response.status(200).json(episodes)
-  }
+  return response.status(200).json(episodes)
 }

@@ -1,7 +1,7 @@
 import cors from 'cors'
 import express from 'express'
 
-import RssController from '../controllers/RssController.js'
+import * as RssController from '../controllers/RssController.js'
 
 const RssRouter = express.Router()
 
