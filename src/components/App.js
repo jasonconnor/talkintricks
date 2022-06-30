@@ -1,9 +1,25 @@
-import Player from './Player/Player'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
-export default function App() {
+import { Home } from './Home'
+import { Stream } from '../routes/Stream'
+
+import { Main } from './Main'
+import { Header } from './Header'
+import { Player } from './Player'
+import { GlobalStyle } from '../styles/GlobalStyles'
+
+export function App() {
   return (
-    <>
-      <Player />
-    </>
+    <Router>
+      <GlobalStyle />
+      <Header />
+      <Main>
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/stream' element={<Stream />} />
+          <Route path='/shop' element={<Stream />} />
+        </Routes>
+      </Main>
+    </Router>
   )
 }
