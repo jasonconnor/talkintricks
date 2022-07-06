@@ -135,12 +135,17 @@ export function Stream() {
       const { url } = episodes[currentEpisode]
       handlePause()
       audioRef.current = new Audio(url)
+      audioRef.current.volume = currentVolume
       setCurrentProgress(0)
   
       if (playing) handlePlay()
 
     }
   }, [currentEpisode])
+
+  useEffect(() => {
+    audioRef.current.volume = currentVolume
+  }, [currentVolume])
 
   useEffect(() => {
     playing
