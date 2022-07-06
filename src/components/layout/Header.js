@@ -1,4 +1,4 @@
-import * as S from '../styles/HeaderStyles'
+import * as S from '../../styles/HeaderStyles'
 
 export function Header() {
   return (

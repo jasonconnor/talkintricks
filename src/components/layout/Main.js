@@ -1,4 +1,4 @@
-import * as S from '../styles/MainStyles'
+import * as S from '../../styles/MainStyles'
 
 export function Main({children}) {
   return (

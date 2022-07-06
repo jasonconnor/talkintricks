@@ -29,8 +29,12 @@ export function PlayerDisplay(props) {
         handlePrev={props.handlePrev}
         handleNext={props.handleNext}
         togglePlay={props.togglePlay}
+        toggleMute={props.toggleMute}
         currentVolume={props.currentVolume}
+        handleSetVolume={props.handleSetVolume}
         showVolumeControls={props.showVolumeControls}
+        setShowEpisodeList={props.setShowEpisodeList}
+        setShowVolumeControls={props.setShowVolumeControls}
       />
     </DisplayContainer>
   )

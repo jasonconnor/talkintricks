@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 import { PlayerWrapper } from '../styles/PlayerStyles'
 import { PlayerDetails } from '../components/player/PlayerDetails'
 import { PlayerDisplay } from '../components/player/PlayerDisplay'
+import { PlayerList } from '../components/player/PlayerList'
 
 export function Stream() {
   const [error, setError] = useState(null)
@@ -12,10 +13,11 @@ export function Stream() {
   const [muted, setMuted] = useState(false)
 
   const [showVolumeControls, setShowVolumeControls] = useState(false)
+  const [showEpisodeList, setShowEpisodeList] = useState(false)
 
   const [currentEpisode, setCurrentEpisode] = useState(0)
   const [currentProgress, setCurrentProgress] = useState(0)
-  const [currentVolume, setCurrentVolume] = useState(1)
+  const [currentVolume, setCurrentVolume] = useState(.75)
 
   const audioRef = useRef(new Audio())
   const progressRef = useRef(0)
@@ -75,6 +77,25 @@ export function Stream() {
       : setPlaying(true)
   }
 
+  function toggleMute() {
+    console.log('mute toggle')
+    muted
+      ? setMuted(false)
+      : setMuted(true)
+  }
+
+  function handleMute() {
+    console.log('muted')
+    setCurrentVolume(0)
+  }
+
+  function handleUnmute() {
+    console.log('unmuted')
+    volumeRef.current === 0
+      ? setCurrentVolume(1)
+      : setCurrentVolume(volumeRef.current)
+  }
+
   function handlePlay() {
     audioRef.current.play()
     startListening()
@@ -83,6 +104,21 @@ export function Stream() {
   function handlePause() {
     audioRef.current.pause()
     clearInterval(progressRef.current)
+  }
+
+  function handleSetVolume(event) {
+    const value = parseFloat(event.target.value)
+
+    if (value === 0) setMuted(true)
+    volumeRef.current = value
+    setCurrentVolume(value)
+    if (muted) setMuted(false)
+  }
+
+  function selectEpisode(key) {
+    setCurrentEpisode(key)
+    setPlaying(true)
+    setShowEpisodeList(false)
   }
 
   useEffect(() => {
@@ -112,6 +148,12 @@ export function Stream() {
       : handlePause()
   }, [playing])
 
+  useEffect(() => {
+    muted
+      ? handleMute()
+      : handleUnmute()
+  }, [muted])
+
   return (
     <>
       {error && <>{error}</>}
@@ -126,8 +168,11 @@ export function Stream() {
           handleScrubbing={handleScrubbing}
           togglePlay={togglePlay}
           muted={muted}
+          toggleMute={toggleMute}
           currentVolume={currentVolume}
+          handleSetVolume={handleSetVolume}
           showVolumeControls={showVolumeControls}
+          setShowEpisodeList={setShowEpisodeList}
           setShowVolumeControls={setShowVolumeControls}
         />
         <PlayerDetails
@@ -135,6 +180,16 @@ export function Stream() {
           description={episodes[currentEpisode].description}
         />
       </PlayerWrapper>}
+
+      { showEpisodeList && <PlayerList 
+          playing={playing}
+          episodes={episodes}
+          togglePlay={togglePlay}
+          selectEpisode={selectEpisode}
+          currentEpisode={currentEpisode}
+          closeModal={() => setShowEpisodeList(false)}
+        />
+      }
     </>
   )
 }

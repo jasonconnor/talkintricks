@@ -1,44 +1,66 @@
-import { faStepBackward, faStepForward, faList, faPause, faPlay, faVolumeHigh } from '@fortawesome/free-solid-svg-icons'
+import { 
+  faStepBackward, 
+  faStepForward, 
+  faList, 
+  faPause, 
+  faPlay,
+  faVolumeHigh,
+  faVolumeMute
+} from '@fortawesome/free-solid-svg-icons'
 
-import { ControlsContainer, ControlIcon, LargeControlIcon, SmallControlIcon } from '../../styles/PlayerStyles'
+import { 
+  ControlsContainer,
+  ControlIcon,
+  LargeControlIcon,
+  SmallControlIcon,
+  VolumeBar,
+  VolumeBarWrapper,
+  VolumeControlContainer
+} from '../../styles/PlayerStyles'
 
-export function PlayerControls({showVolumeControls, playing, togglePlay, handleNext, handlePrev}) {
+export function PlayerControls(props) {
   return (
     <ControlsContainer>
-      <div>
+      <VolumeControlContainer
+        onMouseLeave={() => props.setShowVolumeControls(false)}
+      >
         <SmallControlIcon
-          icon={faVolumeHigh}
-          // onMouseOver={}
+          icon={props.muted ? faVolumeMute : faVolumeHigh}
+          onMouseOver={() => props.setShowVolumeControls(true)}
+          onClick={props.toggleMute}
         />
 
-        { showVolumeControls && <input 
-            type='range'
-            max='0'
+        {props.showVolumeControls && <VolumeBarWrapper>
+          <VolumeBar
+            value={props.currentVolume}
+            onChange={props.handleSetVolume}
             min='0'
+            max='1'
             step='0.1'
           />
-        }
+        </VolumeBarWrapper>}
 
-      </div>
+      </VolumeControlContainer>
 
       <div>
         <ControlIcon 
           icon={faStepBackward}
-          onClick={handlePrev}
+          onClick={props.handlePrev}
         />
         <LargeControlIcon
-          icon={playing ? faPause : faPlay}
-          onClick={togglePlay}
+          icon={props.playing ? faPause : faPlay}
+          onClick={props.togglePlay}
 
         />
         <ControlIcon
           icon={faStepForward}
-          onClick={handleNext}
+          onClick={props.handleNext}
         />
       </div>
 
       <SmallControlIcon
         icon={faList}
+        onClick={() => props.setShowEpisodeList(true)}
       />
     </ControlsContainer>
   )

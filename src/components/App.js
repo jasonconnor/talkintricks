@@ -1,12 +1,11 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
-import { Home } from './Home'
-import { Stream } from '../routes/Stream'
-
-import { Main } from './Main'
-import { Header } from './Header'
-import { Player } from './Player'
+import { Main } from './layout/Main'
+import { Header } from './layout/Header'
 import { GlobalStyle } from '../styles/GlobalStyles'
+
+import { Home } from '../routes/Home'
+import { Stream } from '../routes/Stream'
 
 export function App() {
   return (
